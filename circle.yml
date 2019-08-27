@@ -25,12 +25,31 @@ jobs:
     docker:
       - image: vapor/swift:5.1-bionic
     steps:
+<<<<<<< HEAD
       - checkout
       - run: swift build -c release
   xenial:
+=======
+      - run:
+          name: Clone Vapor
+          command: git clone -b master https://github.com/vapor/vapor.git
+          working_directory: ~/
+      - run:
+          name: Switch Vapor to this Console revision
+          command: swift package edit Console --revision $CIRCLE_SHA1
+          working_directory: ~/vapor
+      - run:
+          name: Run Vapor unit tests
+          command: swift test
+          working_directory: ~/vapor
+
+
+  linux-fluent:
+>>>>>>> parent of 74cfbea... Added changes from https://github.com/vapor/console/pull/93 (#94)
     docker:
       - image: vapor/swift:5.1-xenial
     steps:
+<<<<<<< HEAD
       - checkout
       - run: swift build
       - run: swift test
@@ -40,14 +59,49 @@ jobs:
     steps:
       - checkout
       - run: swift build -c release
+=======
+      - run:
+          name: Clone Fluent
+          command: git clone -b master https://github.com/vapor/fluent.git
+          working_directory: ~/
+      - run:
+          name: Switch Fluent to this Console revision
+          command: swift package edit Console --revision $CIRCLE_SHA1
+          working_directory: ~/fluent
+      - run:
+          name: Run Fluent unit tests
+          command: swift test
+          working_directory: ~/fluent
+
+>>>>>>> parent of 74cfbea... Added changes from https://github.com/vapor/console/pull/93 (#94)
 
 workflows:
   version: 2
   tests:
     jobs:
+<<<<<<< HEAD
 #      - macos
 #      - macos-release
       - bionic
       - bionic-release
       - xenial
       - xenial-release
+=======
+      - linux
+      - linux-vapor
+      - linux-fluent
+      # - macos
+
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - linux
+      # - macos
+      
+>>>>>>> parent of 74cfbea... Added changes from https://github.com/vapor/console/pull/93 (#94)
