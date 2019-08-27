@@ -16,8 +16,8 @@ public final class ConsoleLogger: Logger {
             + "[ \(level) ]".consoleText(level.style)
             + " "
             + string.consoleText()
-            + " "
-            + "(\(file):\(line))".consoleText(.info)
+//            + " "
+//            + "(\(file):\(line))".consoleText(.info)
         console.output(text)
     }
 }
